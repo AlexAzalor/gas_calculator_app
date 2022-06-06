@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import { userSlice } from '../store/reducers/UserSlice';
+import { dataSlice } from '../store/reducers/DataSlice';
 
 interface Props {
   distance: number;
@@ -18,7 +18,8 @@ interface Props {
 export const MapRoutSearchBox: React.FC<Props> = ({ distance, duration, traceRoute, onPlaceSelected }) => {
   const [secondtCity, setSecondCity] = useState('')
 
-  const { getCityProp } = userSlice.actions;
+  // set states with Redux
+  const { getCityProp } = dataSlice.actions;
   const dispatch = useAppDispatch()
 
   return (

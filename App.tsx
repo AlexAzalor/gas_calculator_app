@@ -49,9 +49,6 @@ import { setupStore } from './src/store/store';
 const Drawer = createDrawerNavigator();
 
 const SideMenu = () => {
-  const [getDistance, setGetDistance] = useState(2)
-  console.log('getDistance', getDistance);
-
   return (
     <Drawer.Navigator
       useLegacyImplementation
@@ -72,6 +69,7 @@ const SideMenu = () => {
 //   );
 // }
 
+// All the logic related to configuring the store - including importing reducers, middleware, and enhancers - is handled in a dedicated file.
 const store = setupStore();
 
 export default function App() {

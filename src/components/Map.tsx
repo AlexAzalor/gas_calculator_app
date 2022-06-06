@@ -9,7 +9,7 @@ import { MapRoutSearchBox } from './MapRoutSearchBox';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Calculator } from './Calculator';
 import { useDispatch } from 'react-redux';
-import { userSlice } from '../store/reducers/UserSlice';
+import { dataSlice } from '../store/reducers/DataSlice';
 import { useAppDispatch } from '../hooks/redux';
 
 const { width, height } = Dimensions.get('window');
@@ -58,7 +58,8 @@ export const Map = () => {
     left: edgePaddingValue,
   }
 
-  const { getDistanceProp } = userSlice.actions;
+  // set states with Redux
+  const { getDistanceProp } = dataSlice.actions;
   const dispatch = useAppDispatch()
 
   const traceRouteOnReady = (args: any) => {

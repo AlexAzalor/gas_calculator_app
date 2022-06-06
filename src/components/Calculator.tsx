@@ -66,8 +66,9 @@ export const Calculator = () => {
   const [yearListFromServer, setYearListFromServer] = useState(yearFromServer);
   const [gasList, setGasList] = useState(typeGas);
 
-  const { distanceRedux } = useAppSelector(state => state.userReducer)
-  const { cityRedux } = useAppSelector(state => state.userReducer)
+  // get states with Redux
+  const { distanceRedux } = useAppSelector(state => state.dataReducer);
+  const { cityRedux } = useAppSelector(state => state.dataReducer);
 
   const onCountryOpen = useCallback(() => {
     setOpenGasList(false);
