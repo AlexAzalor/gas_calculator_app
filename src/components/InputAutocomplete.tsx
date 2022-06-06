@@ -4,13 +4,11 @@ import { GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google
 
 interface Props {
   placeholder: string;
-  onPlaceSelected: (details: GooglePlaceDetail | null) => void
+  onPlaceSelected: (details: GooglePlaceDetail | null) => void;
+  inputValue: (e: string) => void;
 }
 
-export const InputAutocomplete: React.FC<Props> = ({ placeholder, onPlaceSelected }) => {
-  const [inputCity, setInputCity] = useState('')
-  // console.log('state city - ', inputCity);
-
+export const InputAutocomplete: React.FC<Props> = ({ placeholder, onPlaceSelected, inputValue }) => {
   return (
     <>
       <GooglePlacesAutocomplete
@@ -20,7 +18,7 @@ export const InputAutocomplete: React.FC<Props> = ({ placeholder, onPlaceSelecte
         onPress={(data, details = null) => {
           onPlaceSelected(details);
           console.log('Place - ', data.description);
-          setInputCity(data.description)
+          inputValue(data.description)
         }}
         query={{
           key: 'AIzaSyBQU6MxUbfzyYDepaYzEdRoO_mhgUoD0b8',

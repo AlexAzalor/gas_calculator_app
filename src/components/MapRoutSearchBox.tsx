@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 import { InputAutocomplete } from './InputAutocomplete';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { userSlice } from '../store/reducers/UserSlice';
 
 interface Props {
   distance: number;
@@ -13,15 +16,22 @@ interface Props {
 }
 
 export const MapRoutSearchBox: React.FC<Props> = ({ distance, duration, traceRoute, onPlaceSelected }) => {
+  const [secondtCity, setSecondCity] = useState('')
+
+  const { getCityProp } = userSlice.actions;
+  const dispatch = useAppDispatch()
+
   return (
     <View style={styles.searchBox}>
       <InputAutocomplete
         placeholder='Tap start point...'
         onPlaceSelected={(details) => { onPlaceSelected(details, 'start') }}
+        inputValue={(e) => dispatch(getCityProp(e))}
       />
       <InputAutocomplete
         placeholder='Tap end point...'
         onPlaceSelected={(details) => { onPlaceSelected(details, 'end') }}
+        inputValue={(e) => setSecondCity(e)}
       />
       <TouchableOpacity
         style={styles.button}

@@ -8,6 +8,9 @@ import { InputAutocomplete } from './InputAutocomplete';
 import { MapRoutSearchBox } from './MapRoutSearchBox';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Calculator } from './Calculator';
+import { useDispatch } from 'react-redux';
+import { userSlice } from '../store/reducers/UserSlice';
+import { useAppDispatch } from '../hooks/redux';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -24,11 +27,7 @@ const origin = { latitude: 37.3318456, longitude: -122.0296002 };
 const destination = { latitude: 37.771707, longitude: -122.4053769 };
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCCvs29b1B0jZ0unTzcTjOO7KmxmjF9Osk';
 
-type Props = {
-  getDistance: Dispatch<SetStateAction<number>>;
-}
-
-export const Map: React.FC<Props> = ({ getDistance }) => {
+export const Map = () => {
   // console.log('-------itemId--------', itemId)
   // console.log(itemId)
   // const [pin, setPin] = useState({
@@ -40,10 +39,6 @@ export const Map: React.FC<Props> = ({ getDistance }) => {
   const [endPoint, setEndPoint] = useState<LatLng>();
   const [showDirections, setShowDirections] = useState(false);
   const [distance, setDistance] = useState(0);
-  useEffect(() => {
-    getDistance(distance);
-  }, [distance])
-
   const [duration, setDuration] = useState(0);
   const mapRef = useRef<MapView>(null);
 
@@ -63,9 +58,13 @@ export const Map: React.FC<Props> = ({ getDistance }) => {
     left: edgePaddingValue,
   }
 
+  const { getDistanceProp } = userSlice.actions;
+  const dispatch = useAppDispatch()
+
   const traceRouteOnReady = (args: any) => {
     if (args) {
       setDistance(args.distance);
+      dispatch(getDistanceProp(args.distance))
       setDuration(args.duration);
     }
   }

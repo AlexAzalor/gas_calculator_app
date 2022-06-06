@@ -10,6 +10,9 @@ import {
 import { Map } from './src/components/Map';
 import { MapRoutSearchBox } from './src/components/MapRoutSearchBox';
 import { Calculator } from './src/components/Calculator';
+import { Provider } from 'react-redux';
+import { setupStore } from './src/store/store';
+// import { store } from './src/redux';
 
 // function Feed() {
 //   return (
@@ -54,25 +57,29 @@ const SideMenu = () => {
       useLegacyImplementation
     // drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Map">
-        {() => (
-          <Map getDistance={setGetDistance} />
-        )}
-      </Drawer.Screen>
+      <Drawer.Screen name="Map" component={Map} />
       {/* <Drawer.Screen name="Test" component={MapRoutSearchBox} /> */}
-      <Drawer.Screen name="Gas calculator">
-        {() => (
-          <Calculator x={getDistance} />
-        )}
-      </Drawer.Screen>
+      <Drawer.Screen name="Gas calculator" component={Calculator} />
     </Drawer.Navigator>
   );
 }
 
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <SideMenu />
+//     </NavigationContainer>
+//   );
+// }
+
+const store = setupStore();
+
 export default function App() {
   return (
     <NavigationContainer>
-      <SideMenu />
+      <Provider store={store}>
+        <SideMenu />
+      </Provider>
     </NavigationContainer>
   );
 }

@@ -3,6 +3,7 @@ import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Formik } from 'formik'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useAppSelector } from '../hooks/redux';
 
 const makeFromServer = [
   { label: 'Honda', value: 'Honda' },
@@ -49,11 +50,7 @@ const typeGas = [
   { label: 'UK', value: 'UK' },
 ]
 
-interface Props {
-  x: number;
-}
-
-export const Calculator: React.FC<Props> = ({ x }) => {
+export const Calculator = () => {
   const [openMakeList, setOpenMakeList] = useState(false);
   const [openModelList, setOpenModelList] = useState(false);
   const [openYearList, setOpenYearList] = useState(false);
@@ -69,9 +66,8 @@ export const Calculator: React.FC<Props> = ({ x }) => {
   const [yearListFromServer, setYearListFromServer] = useState(yearFromServer);
   const [gasList, setGasList] = useState(typeGas);
 
-  console.log('Calculator props - ', x);
-
-  // const [x, setX] = useState('')
+  const { distanceRedux } = useAppSelector(state => state.userReducer)
+  const { cityRedux } = useAppSelector(state => state.userReducer)
 
   const onCountryOpen = useCallback(() => {
     setOpenGasList(false);
@@ -80,8 +76,6 @@ export const Calculator: React.FC<Props> = ({ x }) => {
   const onCityOpen = useCallback(() => {
     setOpenMakeList(false);
   }, []);
-
-  // console.log('xxxxxx', x);
 
   return (
     <Formik initialValues={{ carMake: '' }} onSubmit={(values) => console.log('submitted', values)}>
@@ -146,7 +140,8 @@ export const Calculator: React.FC<Props> = ({ x }) => {
           <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Calculate</Text>
           </TouchableOpacity>
-          <Text>{x} km</Text>
+          <Text>redux distance - {distanceRedux}</Text>
+          <Text>redux city - {cityRedux}</Text>
         </View>
       )}
     </Formik>
@@ -180,4 +175,3 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   }
 })
-
