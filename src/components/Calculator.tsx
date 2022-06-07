@@ -78,74 +78,84 @@ export const Calculator = () => {
     setOpenMakeList(false);
   }, []);
 
+  const submit: string[] = [];
+
+  const getSubmit = () => {
+    // To backend - Honda Odyssey 2022 Regular 402 km Toronto
+    console.log('getSubmit --- ', carMake, carModel, carYear, gasType, distanceRedux, cityRedux);
+  }
+
   return (
-    <Formik initialValues={{ carMake: '' }} onSubmit={(values) => console.log('submitted', values)}>
-      {({ handleChange, handleSubmit, values }) => (
-        <View>
-          <Text style={styles.text}>Make</Text>
-          <DropDownPicker
-            // searchable={true}
-            // listMode="MODAL"
-            open={openMakeList}
-            setOpen={setOpenMakeList}
-            onOpen={onCountryOpen}
-            value={carMake}
-            setValue={setCarMake}
-            items={makeListFromServer}
-            setItems={setMakeListFromServer}
-            style={styles.selector}
-            zIndex={3000}
-            zIndexInverse={1000}
-            onSelectItem={() => {
-              // console.log('selected', item);
-              handleChange('carMake')
-            }}
-          />
-          <Text style={styles.text}>Model</Text>
-          <DropDownPicker
-            open={openModelList}
-            setOpen={setOpenModelList}
-            value={carModel}
-            setValue={setCarModel}
-            items={modelListFromServer}
-            setItems={setModelListFromServer}
-            style={styles.selector}
-            zIndex={2000}
-            zIndexInverse={2000}
-          />
-          <Text style={styles.text}>Year</Text>
-          <DropDownPicker
-            open={openYearList}
-            setOpen={setOpenYearList}
-            value={carYear}
-            setValue={setCarYear}
-            items={yearListFromServer}
-            setItems={setYearListFromServer}
-            style={styles.selector}
-            zIndex={1000}
-            zIndexInverse={3000}
-          />
-          <Text style={styles.text}>Type of Gasoline</Text>
-          <DropDownPicker
-            open={openGasList}
-            setOpen={setOpenGasList}
-            onOpen={onCityOpen}
-            value={gasType}
-            setValue={setGasType}
-            items={gasList}
-            setItems={setGasList}
-            style={styles.selector}
-            zIndex={500}
-            zIndexInverse={3500}
-          />
-          <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>Calculate</Text>
-          </TouchableOpacity>
-          <Text>redux distance - {distanceRedux}</Text>
-          <Text>redux city - {cityRedux}</Text>
-        </View>
-      )}
-    </Formik>
+    <View>
+      <Text style={styles.text}>Make</Text>
+      <DropDownPicker
+        // searchable={true}
+        // listMode="MODAL"
+        open={openMakeList}
+        setOpen={setOpenMakeList}
+        onOpen={onCountryOpen}
+        value={carMake}
+        setValue={setCarMake}
+        items={makeListFromServer}
+        setItems={setMakeListFromServer}
+        style={styles.selector}
+        zIndex={3000}
+        zIndexInverse={1000}
+      />
+      <Text style={styles.text}>Model</Text>
+      <DropDownPicker
+        open={openModelList}
+        setOpen={setOpenModelList}
+        value={carModel}
+        setValue={setCarModel}
+        items={modelListFromServer}
+        setItems={setModelListFromServer}
+        style={styles.selector}
+        zIndex={2000}
+        zIndexInverse={2000}
+      />
+      <Text style={styles.text}>Year</Text>
+      <DropDownPicker
+        open={openYearList}
+        setOpen={setOpenYearList}
+        value={carYear}
+        setValue={setCarYear}
+        items={yearListFromServer}
+        setItems={setYearListFromServer}
+        style={styles.selector}
+        zIndex={1000}
+        zIndexInverse={3000}
+      />
+      <Text style={styles.text}>Type of Gasoline</Text>
+      <DropDownPicker
+        open={openGasList}
+        setOpen={setOpenGasList}
+        onOpen={onCityOpen}
+        value={gasType}
+        setValue={setGasType}
+        items={gasList}
+        setItems={setGasList}
+        style={styles.selector}
+        zIndex={500}
+        zIndexInverse={3500}
+      />
+      <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={getSubmit}>
+        <Text style={styles.buttonText}>Calculate</Text>
+      </TouchableOpacity>
+
+      <Text>redux distance - {distanceRedux}</Text>
+      <Text>redux city - {cityRedux}</Text>
+
+      <Text style={styles.resultTitle}>Gas Price for a Trip: </Text>
+      <View style={[styles.resultValue, styles.boxShadow]}>
+        <Text style={styles.resultText}>{203} $</Text>
+      </View>
+
+      <Text style={styles.resultTitle}>CO2 Produced: </Text>
+      <View style={[styles.resultValue, styles.boxShadow]}>
+        <Text style={styles.resultText}>{0} kg</Text>
+      </View>
+    </View>
   );
 }
 
@@ -174,5 +184,32 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 16,
     fontWeight: "500",
+  },
+  resultTitle: {
+    fontSize: 20,
+    fontWeight: "500",
+    textAlign: 'center',
+  },
+  resultValue: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 10,
+    margin: 10,
+    alignSelf: 'center',
+  },
+  boxShadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  resultText: {
+    fontSize: 26,
+    fontWeight: "600",
+    textAlign: 'center',
   }
 })
