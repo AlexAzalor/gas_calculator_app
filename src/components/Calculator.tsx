@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Formik } from 'formik'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useAppSelector } from '../hooks/redux';
+import { instance } from '../api/backend';
 
 const makeFromServer = [
   { label: 'Honda', value: 'Honda' },
@@ -51,15 +51,17 @@ const typeGas = [
 ]
 
 export const Calculator = () => {
+  // console.log('render....');
+
   const [openMakeList, setOpenMakeList] = useState(false);
   const [openModelList, setOpenModelList] = useState(false);
   const [openYearList, setOpenYearList] = useState(false);
   const [openGasList, setOpenGasList] = useState(false);
 
-  const [carMake, setCarMake] = useState(null);
-  const [carModel, setCarModel] = useState(null);
-  const [carYear, setCarYear] = useState(null);
-  const [gasType, setGasType] = useState(null);
+  const [carMake, setCarMake] = useState('');
+  const [carModel, setCarModel] = useState('');
+  const [carYear, setCarYear] = useState('');
+  const [gasType, setGasType] = useState('');
 
   const [makeListFromServer, setMakeListFromServer] = useState(makeFromServer);
   const [modelListFromServer, setModelListFromServer] = useState(modelFromServer);
@@ -69,6 +71,50 @@ export const Calculator = () => {
   // get states with Redux
   const { distanceRedux } = useAppSelector(state => state.dataReducer);
   const { cityRedux } = useAppSelector(state => state.dataReducer);
+  // console.log('cityRedux ----', cityRedux.split(',')[0]);
+
+  const [gasPrice, setGasPrice] = useState(0);
+  const [carbonConsumption, setCarbonConsumption] = useState(0);
+
+  // const configurationObject = {
+  //   url: `${domain.REACT_NATIVE_DOMAIN}/api/gas_consumption`,
+  //   method: "POST",
+  //   data: { car, model, year, gas, dist, city },
+  // };
+
+  // http://127.0.0.1:8000/api/gas_consumption
+
+
+  const getGasPrice = async () => {
+    const response = await instance(
+      carMake,
+      carModel,
+      carYear,
+      gasType,
+      `${distanceRedux} km`,
+      cityRedux.split(',')[0]
+    ).get('/api/gas_consumption');
+
+    console.log('response.data - ', response.data);
+
+    setGasPrice(response.data.gas_price);
+    setCarbonConsumption(response.data.c02_kg);
+
+    // if (response.data.error === 'wrong_car_options') {
+    //   alert('Please complete all fields.')
+    // }
+
+    // if (response.data.error === 'wrong_gas_type') {
+    //   alert('Wrong Type of Gasoline selected for the current city/country.')
+    // }
+
+    // if (response.status === 200) {
+    //   setGasPrice(response.data.gas_price);
+    //   setCarbonConsumption(response.data.c02_kg);
+    // } else {
+    //   alert('Something went wrong... Please, refresh the page!');
+    // }
+  }
 
   const onCountryOpen = useCallback(() => {
     setOpenGasList(false);
@@ -78,11 +124,9 @@ export const Calculator = () => {
     setOpenMakeList(false);
   }, []);
 
-  const submit: string[] = [];
 
   const getSubmit = () => {
-    // To backend - Honda Odyssey 2022 Regular 402 km Toronto
-    console.log('getSubmit --- ', carMake, carModel, carYear, gasType, distanceRedux, cityRedux);
+    getGasPrice()
   }
 
   return (
@@ -148,12 +192,12 @@ export const Calculator = () => {
 
       <Text style={styles.resultTitle}>Gas Price for a Trip: </Text>
       <View style={[styles.resultValue, styles.boxShadow]}>
-        <Text style={styles.resultText}>{203} $</Text>
+        <Text style={styles.resultText}>{gasPrice} $</Text>
       </View>
 
       <Text style={styles.resultTitle}>CO2 Produced: </Text>
       <View style={[styles.resultValue, styles.boxShadow]}>
-        <Text style={styles.resultText}>{0} kg</Text>
+        <Text style={styles.resultText}>{carbonConsumption} kg</Text>
       </View>
     </View>
   );
