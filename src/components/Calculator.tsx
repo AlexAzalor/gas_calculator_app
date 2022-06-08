@@ -1,9 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useAppSelector } from '../hooks/redux';
 import { instance } from '../api/backend';
+import { instanceMake } from '../api/apiMake';
+import { instanceModel } from '../api/apiModel';
+import { instanceYear } from '../api/apiYear';
 
 const makeFromServer = [
   { label: 'Honda', value: 'Honda' },
@@ -63,7 +66,7 @@ export const Calculator = () => {
   const [carYear, setCarYear] = useState('');
   const [gasType, setGasType] = useState('');
 
-  const [makeListFromServer, setMakeListFromServer] = useState(makeFromServer);
+  const [makeListFromServer, setMakeListFromServer] = useState([{ label: '', value: '' }]);
   const [modelListFromServer, setModelListFromServer] = useState(modelFromServer);
   const [yearListFromServer, setYearListFromServer] = useState(yearFromServer);
   const [gasList, setGasList] = useState(typeGas);
@@ -115,6 +118,33 @@ export const Calculator = () => {
     //   alert('Something went wrong... Please, refresh the page!');
     // }
   }
+
+  const getMake = async () => {
+    const response = await instanceMake().get('/api/make');
+    setMakeListFromServer(response.data.filterer_make_list);
+  }
+
+  useEffect(() => {
+    getMake();
+  }, [])
+
+  const getModel = async () => {
+    const response = await instanceModel(carMake).get('/api/model')
+    setModelListFromServer(response.data.filterer_model_list)
+  }
+
+  useEffect(() => {
+    getModel();
+  }, [carMake])
+
+  const getYear = async () => {
+    const response = await instanceYear(carModel, carMake).get('/api/year')
+    setYearListFromServer(response.data.vehicle_year_list)
+  }
+
+  useEffect(() => {
+    getYear();
+  }, [carModel])
 
   const onCountryOpen = useCallback(() => {
     setOpenGasList(false);
