@@ -8,43 +8,6 @@ import { instanceMake } from '../api/apiMake';
 import { instanceModel } from '../api/apiModel';
 import { instanceYear } from '../api/apiYear';
 
-const makeFromServer = [
-  { label: 'Honda', value: 'Honda' },
-  { label: 'S and S Coach Company E.p. Dutton', value: 'S and S Coach Company E.p. Dutton' },
-  { label: 'BMW', value: 'BMW' },
-  { label: 'Mercedes-Benz', value: 'Mercedes-Benz' },
-  { label: 'McLaren Automotive', value: 'McLaren Automotive' },
-  { label: 'Import Foreign Auto Sales Inc', value: 'Import Foreign Auto Sales Inc' },
-  { label: 'American Motors Corporation', value: 'American Motors Corporation' },
-  { label: 'Hyundai', value: 'Hyundai' },
-  { label: 'Porsche', value: 'Porsche' },
-  { label: 'Ford', value: 'Ford' },
-]
-const modelFromServer = [
-  { label: 'Odyssey', value: 'Odyssey' },
-  { label: 'Funeral Coach 2WD', value: 'Funeral Coach 2WD' },
-  { label: '5 Series', value: '5 Series' },
-  { label: 'Lynx', value: 'Lynx' },
-  { label: 'Eclipse Cross ES 2WD', value: 'Eclipse Cross ES 2WD' },
-  { label: 'Sunbird Convertible', value: 'Sunbird Convertible' },
-  { label: 'Van 1500/2500 2WD', value: 'Van 1500/2500 2WD' },
-  { label: 'Civic', value: 'Civic' },
-  { label: 'Z8', value: 'Z8' },
-  { label: 'Spider Cambiocorsa/Spider GT', value: 'Spider Cambiocorsa/Spider GT' },
-]
-const yearFromServer = [
-  { label: '2022', value: '2022' },
-  { label: '2021', value: '2021' },
-  { label: '2020', value: '2020' },
-  { label: '2019', value: '2019' },
-  { label: '2018', value: '2018' },
-  { label: '2017', value: '2017' },
-  { label: '2016', value: '2016' },
-  { label: '2015', value: '2015' },
-  { label: '2014', value: '2014' },
-  { label: '2013', value: '2013' },
-]
-
 const typeGas = [
   { label: 'Regular', value: 'Regular' },
   { label: 'Mid-Grade', value: 'Mid-Grade' },
@@ -67,26 +30,16 @@ export const Calculator = () => {
   const [gasType, setGasType] = useState('');
 
   const [makeListFromServer, setMakeListFromServer] = useState([{ label: '', value: '' }]);
-  const [modelListFromServer, setModelListFromServer] = useState(modelFromServer);
-  const [yearListFromServer, setYearListFromServer] = useState(yearFromServer);
+  const [modelListFromServer, setModelListFromServer] = useState([{ label: '', value: '' }]);
+  const [yearListFromServer, setYearListFromServer] = useState([{ label: '', value: '' }]);
   const [gasList, setGasList] = useState(typeGas);
 
   // get states with Redux
   const { distanceRedux } = useAppSelector(state => state.dataReducer);
   const { cityRedux } = useAppSelector(state => state.dataReducer);
-  // console.log('cityRedux ----', cityRedux.split(',')[0]);
 
   const [gasPrice, setGasPrice] = useState(0);
   const [carbonConsumption, setCarbonConsumption] = useState(0);
-
-  // const configurationObject = {
-  //   url: `${domain.REACT_NATIVE_DOMAIN}/api/gas_consumption`,
-  //   method: "POST",
-  //   data: { car, model, year, gas, dist, city },
-  // };
-
-  // http://127.0.0.1:8000/api/gas_consumption
-
 
   const getGasPrice = async () => {
     const response = await instance(
@@ -95,28 +48,21 @@ export const Calculator = () => {
       carYear,
       gasType,
       `${distanceRedux} km`,
-      cityRedux.split(',')[0]
+      cityRedux
     ).get('/api/gas_consumption');
 
     console.log('response.data - ', response.data);
 
+    if (response.data.error === 'wrong_gas_type') {
+      Alert.alert('Wrong Type of Gasoline selected for the current city/country.')
+    }
+
+    if (response.data.error === 'wrong_car_options') {
+      Alert.alert('Please complete all fields.')
+    }
+
     setGasPrice(response.data.gas_price);
     setCarbonConsumption(response.data.c02_kg);
-
-    // if (response.data.error === 'wrong_car_options') {
-    //   alert('Please complete all fields.')
-    // }
-
-    // if (response.data.error === 'wrong_gas_type') {
-    //   alert('Wrong Type of Gasoline selected for the current city/country.')
-    // }
-
-    // if (response.status === 200) {
-    //   setGasPrice(response.data.gas_price);
-    //   setCarbonConsumption(response.data.c02_kg);
-    // } else {
-    //   alert('Something went wrong... Please, refresh the page!');
-    // }
   }
 
   const getMake = async () => {

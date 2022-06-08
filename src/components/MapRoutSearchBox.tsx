@@ -22,12 +22,32 @@ export const MapRoutSearchBox: React.FC<Props> = ({ distance, duration, traceRou
   const { getCityProp } = dataSlice.actions;
   const dispatch = useAppDispatch()
 
+  const getCity = (place: string) => {
+    const statusMap = new Map([
+      [place.includes('Toronto'), 'Toronto'],
+      [place.includes('Barrie'), 'Barrie'],
+      [place.includes('Guelph'), 'Guelph'],
+      [place.includes('Hamilton'), 'Hamilton'],
+      [place.includes('Kitchener'), 'Kitchener'],
+      [place.includes('Oshawa'), 'Oshawa'],
+      [place.includes('Peterborough'), 'Peterborough'],
+      [place.includes('Brantford'), 'Brantford'],
+      [place.includes('United Kingdom'), 'United Kingdom'],
+      [place.includes('UK'), 'UK'],
+    ]);
+
+    function getStatusByMap() {
+      return statusMap.get(true) || 'Average';
+    }
+    dispatch(getCityProp(getStatusByMap()))
+  }
+
   return (
     <View style={styles.searchBox}>
       <InputAutocomplete
         placeholder='Tap start point...'
         onPlaceSelected={(details) => { onPlaceSelected(details, 'start') }}
-        inputValue={(e) => dispatch(getCityProp(e))}
+        inputValue={getCity}
       />
       <InputAutocomplete
         placeholder='Tap end point...'
