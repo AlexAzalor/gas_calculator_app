@@ -109,8 +109,11 @@ export const Calculator = () => {
     <View>
       <Text style={styles.text}>Make</Text>
       <DropDownPicker
-        // searchable={true}
-        // listMode="MODAL"
+        searchable={true}
+        listMode="MODAL"
+        modalProps={{
+          animationType: "slide"
+        }}
         open={openMakeList}
         setOpen={setOpenMakeList}
         onOpen={onCountryOpen}
@@ -124,6 +127,11 @@ export const Calculator = () => {
       />
       <Text style={styles.text}>Model</Text>
       <DropDownPicker
+        listMode="MODAL"
+        modalProps={{
+          animationType: "slide"
+        }}
+        searchable={true}
         open={openModelList}
         setOpen={setOpenModelList}
         value={carModel}
@@ -136,6 +144,11 @@ export const Calculator = () => {
       />
       <Text style={styles.text}>Year</Text>
       <DropDownPicker
+        searchable={true}
+        listMode="MODAL"
+        modalProps={{
+          animationType: "slide"
+        }}
         open={openYearList}
         setOpen={setOpenYearList}
         value={carYear}
@@ -163,8 +176,8 @@ export const Calculator = () => {
         <Text style={styles.buttonText}>Calculate</Text>
       </TouchableOpacity>
 
-      <Text>redux distance - {distanceRedux}</Text>
-      <Text>redux city - {cityRedux}</Text>
+      {/* <Text>redux distance - {distanceRedux}</Text>
+      <Text>redux city - {cityRedux}</Text> */}
 
       <Text style={styles.resultTitle}>Gas Price for a Trip: </Text>
       <View style={[styles.resultValue, styles.boxShadow]}>

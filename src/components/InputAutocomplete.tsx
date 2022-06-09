@@ -17,7 +17,6 @@ export const InputAutocomplete: React.FC<Props> = ({ placeholder, onPlaceSelecte
         fetchDetails
         onPress={(data, details = null) => {
           onPlaceSelected(details);
-          console.log('Place - ', data.description);
           inputValue(data.description)
         }}
         query={{

@@ -63,7 +63,7 @@ export const MapRoutSearchBox: React.FC<Props> = ({ distance, duration, traceRou
       </TouchableOpacity>
       {distance && duration ? (
         <View>
-          <Text style={styles.value}>{distance.toFixed(2)} km</Text>
+          <Text style={styles.value}>{distance.toFixed(1)} km</Text>
           <Text style={styles.value}>{Math.ceil(duration)} min</Text>
         </View>
       ) : null}
