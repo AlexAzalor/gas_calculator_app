@@ -112,7 +112,7 @@ export const Calculator = () => {
         searchable={true}
         listMode="MODAL"
         modalProps={{
-          animationType: "slide"
+          animationType: "fade"
         }}
         open={openMakeList}
         setOpen={setOpenMakeList}
@@ -127,11 +127,6 @@ export const Calculator = () => {
       />
       <Text style={styles.text}>Model</Text>
       <DropDownPicker
-        listMode="MODAL"
-        modalProps={{
-          animationType: "slide"
-        }}
-        searchable={true}
         open={openModelList}
         setOpen={setOpenModelList}
         value={carModel}
@@ -144,11 +139,6 @@ export const Calculator = () => {
       />
       <Text style={styles.text}>Year</Text>
       <DropDownPicker
-        searchable={true}
-        listMode="MODAL"
-        modalProps={{
-          animationType: "slide"
-        }}
         open={openYearList}
         setOpen={setOpenYearList}
         value={carYear}

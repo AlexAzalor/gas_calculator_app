@@ -3,7 +3,7 @@ import domain from '../api/domain.json';
 
 export const instanceMake = () => {
   return axios.create({
-    baseURL: "https://toronto.simple2b.net",
+    baseURL: domain.REACT_NATIVE_DOMAIN,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Access-Control-Allow-Origin": "*",

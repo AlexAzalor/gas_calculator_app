@@ -18,7 +18,7 @@ export const instance = (
 
   return axios.create({
     // Authorization: `Bearer ${token}`,
-    baseURL: "https://toronto.simple2b.net",
+    baseURL: domain.REACT_NATIVE_DOMAIN,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',

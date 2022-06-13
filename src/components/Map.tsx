@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import MapView, { Callout, Circle, LatLng, Marker } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, CameraRoll, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, CameraRoll, TouchableOpacity, Linking, Alert } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import { GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Constants from 'expo-constants';
@@ -14,11 +14,11 @@ import { useAppDispatch } from '../hooks/redux';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.02;
+const LATITUDE_DELTA = 0.07;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const INITIAL_POSITION = {
-  latitude: 40.7767110,
-  longitude: -73.979704,
+  latitude: 43.65084753185803,
+  longitude: -79.38226848764323,
   latitudeDelta: LATITUDE_DELTA,
   longitudeDelta: LONGITUDE_DELTA
 }
@@ -36,7 +36,13 @@ export const Map = () => {
   // });
 
   const [startPoint, setStartPoint] = useState<LatLng>();
+  console.log('startPoint?.latitude', startPoint?.latitude, typeof (startPoint?.latitude));
+  console.log('startPoint?.longitude', startPoint?.longitude);
+
   const [endPoint, setEndPoint] = useState<LatLng>();
+  console.log('endPoint?.latitude', endPoint?.latitude);
+  console.log('endPoint?.longitude', endPoint?.longitude, endPoint?.longitude.toFixed(7));
+
   const [showDirections, setShowDirections] = useState(false);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -89,12 +95,23 @@ export const Map = () => {
     moveTo(position);
   }
 
+  const handleGoogleMapLink = () => {
+    console.log('startPoint?.latitude --- ', startPoint?.latitude, startPoint?.longitude, endPoint?.latitude, endPoint?.longitude);
+
+    if (startPoint?.latitude && endPoint?.latitude) {
+      Linking.openURL(`https://www.google.com/maps/dir/${startPoint.latitude.toFixed(7)},${startPoint.longitude.toFixed(7)}/${endPoint.latitude.toFixed(7)},${endPoint.longitude.toFixed(7)}`);
+    } else {
+      Alert.alert('Please tap start point and end point.');
+    }
+  }
+
   return (
     <View style={styles.container}>
       <MapView
         ref={mapRef}
         style={styles.map}
         initialRegion={INITIAL_POSITION}
+        toolbarEnabled={true}
       >
         {startPoint && <Marker coordinate={startPoint}></Marker>}
         {endPoint && <Marker coordinate={endPoint}></Marker>}
@@ -115,6 +132,10 @@ export const Map = () => {
         traceRoute={traceRoute}
         onPlaceSelected={onPlaceSelected}
       />
+      <Text style={{ color: 'blue' }}
+        onPress={handleGoogleMapLink}>
+        Go to Google map
+      </Text>
     </View>
   );
 }
@@ -148,4 +169,41 @@ const styles = StyleSheet.create({
           }}
         >
         </Marker> */}
+
+        // <Marker
+        //   coordinate={{
+        //     latitude: 43.65126312685369,
+        //     longitude: -79.38690724058443,
+        //   }}
+        //   draggable={true}
+        //   onDragStart={(e) => {
+        //     console.log('MArKer Drag start ------ ', e.nativeEvent.coordinate)
+        //   }}
+        //   onDragEnd={(e) => {
+        //     setStartPoint({
+        //       latitude: e.nativeEvent.coordinate.latitude,
+        //       longitude: e.nativeEvent.coordinate.longitude,
+        //     })
+        //     console.log('MArKer Drag end ------- ', e.nativeEvent.coordinate)
+        //   }}
+        // >
+        // </Marker>
+        // <Marker
+        //   coordinate={{
+        //     latitude: 43.65176411329413,
+        //     longitude: -79.38189029408626,
+        //   }}
+        //   draggable={true}
+        //   onDragStart={(e) => {
+        //     console.log('MArKer 2 start', e.nativeEvent.coordinate)
+        //   }}
+        //   onDragEnd={(e) => {
+        //     setEndPoint({
+        //       latitude: e.nativeEvent.coordinate.latitude,
+        //       longitude: e.nativeEvent.coordinate.longitude,
+        //     })
+        //     console.log('MArKer 2 end', e.nativeEvent.coordinate)
+        //   }}
+        // >
+        // </Marker>
 
