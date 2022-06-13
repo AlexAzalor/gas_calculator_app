@@ -1,14 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import MapView, { Callout, Circle, LatLng, Marker } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, CameraRoll, TouchableOpacity, Linking, Alert } from 'react-native';
+import React, { useRef, useState } from 'react';
+import MapView, { LatLng, Marker } from 'react-native-maps';
+import { StyleSheet, Text, View, Dimensions, Linking, Alert } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
-import { GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import Constants from 'expo-constants';
-import { InputAutocomplete } from './InputAutocomplete';
+import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { MapRoutSearchBox } from './MapRoutSearchBox';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Calculator } from './Calculator';
-import { useDispatch } from 'react-redux';
 import { dataSlice } from '../store/reducers/DataSlice';
 import { useAppDispatch } from '../hooks/redux';
 
@@ -23,32 +18,18 @@ const INITIAL_POSITION = {
   longitudeDelta: LONGITUDE_DELTA
 }
 
-const origin = { latitude: 37.3318456, longitude: -122.0296002 };
-const destination = { latitude: 37.771707, longitude: -122.4053769 };
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCCvs29b1B0jZ0unTzcTjOO7KmxmjF9Osk';
 
 export const Map = () => {
-  // console.log('-------itemId--------', itemId)
-  // console.log(itemId)
-  // const [pin, setPin] = useState({
-  //   latitude: 37.78825,
-  //   longitude: -122.4324,
-  // });
-
   const [startPoint, setStartPoint] = useState<LatLng>();
-  console.log('startPoint?.latitude', startPoint?.latitude, typeof (startPoint?.latitude));
-  console.log('startPoint?.longitude', startPoint?.longitude);
-
   const [endPoint, setEndPoint] = useState<LatLng>();
-  console.log('endPoint?.latitude', endPoint?.latitude);
-  console.log('endPoint?.longitude', endPoint?.longitude, endPoint?.longitude.toFixed(7));
-
   const [showDirections, setShowDirections] = useState(false);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
   const mapRef = useRef<MapView>(null);
 
-  const moveTo = async (position: LatLng) => {
+  // To make the camera show the entered place
+  const moveCameraToEnteredPoint = async (position: LatLng) => {
     const camera = await mapRef.current?.getCamera();
     if (camera) {
       camera.center = position;
@@ -56,18 +37,11 @@ export const Map = () => {
     }
   }
 
-  const edgePaddingValue = 75;
-  const edgePadding = {
-    top: edgePaddingValue,
-    right: edgePaddingValue,
-    bottom: edgePaddingValue,
-    left: edgePaddingValue,
-  }
-
   // set states with Redux
   const { getDistanceProp } = dataSlice.actions;
   const dispatch = useAppDispatch()
 
+  // Get distance and duration value
   const traceRouteOnReady = (args: any) => {
     if (args) {
       setDistance(args.distance);
@@ -76,7 +50,16 @@ export const Map = () => {
     }
   }
 
-  // so that when setting the route, the camera rises
+  // Viewing angle
+  const edgePaddingValue = 75;
+  const edgePadding = {
+    top: edgePaddingValue,
+    right: edgePaddingValue,
+    bottom: edgePaddingValue,
+    left: edgePaddingValue,
+  }
+
+  // To make the camera travel exactly in the center of the line after setting the route
   const traceRoute = () => {
     if (startPoint && endPoint) {
       setShowDirections(true);
@@ -84,6 +67,7 @@ export const Map = () => {
     }
   }
 
+  // Set start point and end point to state
   const onPlaceSelected = (details: GooglePlaceDetail | null, flag: 'start' | 'end') => {
     const set = flag === 'start' ? setStartPoint : setEndPoint;
     const position = {
@@ -92,11 +76,12 @@ export const Map = () => {
     }
 
     set(position);
-    moveTo(position);
+    moveCameraToEnteredPoint(position);
   }
 
+  // To open a set route in Google Maps (transition)
   const handleGoogleMapLink = () => {
-    console.log('startPoint?.latitude --- ', startPoint?.latitude, startPoint?.longitude, endPoint?.latitude, endPoint?.longitude);
+    console.log('points --- ', startPoint?.latitude, startPoint?.longitude, endPoint?.latitude, endPoint?.longitude);
 
     if (startPoint?.latitude && endPoint?.latitude) {
       Linking.openURL(`https://www.google.com/maps/dir/${startPoint.latitude.toFixed(7)},${startPoint.longitude.toFixed(7)}/${endPoint.latitude.toFixed(7)},${endPoint.longitude.toFixed(7)}`);
@@ -113,7 +98,7 @@ export const Map = () => {
         initialRegion={INITIAL_POSITION}
         toolbarEnabled={true}
       >
-        {startPoint && <Marker coordinate={startPoint}></Marker>}
+        {startPoint && <Marker coordinate={startPoint} image={require('../../assets/icon-marker.png')}></Marker>}
         {endPoint && <Marker coordinate={endPoint}></Marker>}
         {showDirections && startPoint && endPoint && (
           <MapViewDirections
