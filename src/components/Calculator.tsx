@@ -127,6 +127,11 @@ export const Calculator = () => {
       />
       <Text style={styles.text}>Model</Text>
       <DropDownPicker
+        searchable={true}
+        listMode="MODAL"
+        modalProps={{
+          animationType: "fade"
+        }}
         open={openModelList}
         setOpen={setOpenModelList}
         value={carModel}
