@@ -19,7 +19,7 @@ const INITIAL_POSITION = {
 }
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCCvs29b1B0jZ0unTzcTjOO7KmxmjF9Osk';
-// test
+
 export const Map = () => {
   const [startPoint, setStartPoint] = useState<LatLng>();
   const [endPoint, setEndPoint] = useState<LatLng>();

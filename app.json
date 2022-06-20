@@ -1,8 +1,13 @@
 {
   "expo": {
-    "name": "my-app",
+    "name": "Gas Calculator",
     "slug": "my-app",
-    "version": "1.0.0",
+    "version": "1.0.5",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,11 +26,17 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 5,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/square150.png"
       },
-      "package": "com.alexazalor.gas_calculator"
+      "package": "com.alexazalor.gas_calculator",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCCvs29b1B0jZ0unTzcTjOO7KmxmjF9Osk"
+        }
+      },
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"
