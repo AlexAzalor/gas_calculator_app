@@ -12,6 +12,7 @@ import { MapRoutSearchBox } from './src/components/MapRoutSearchBox';
 import { Calculator } from './src/components/Calculator';
 import { Provider } from 'react-redux';
 import { setupStore } from './src/store/store';
+import { SignInScreen } from './src/components/SignInScreen';
 // import { store } from './src/redux';
 
 // function Feed() {
@@ -76,7 +77,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <SideMenu />
+        {/* <SideMenu /> */}
+        <SignInScreen />
       </NavigationContainer>
     </Provider>
   );
