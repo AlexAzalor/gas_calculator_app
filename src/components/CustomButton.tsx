@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 interface Props {
   onPress: () => void;
   text: string;
-  type?: "PRIMARY" | "TERTIARY";
+  type?: "PRIMARY" | "TERTIARY" | "SECONDARY";
   bgColor?: string;
   fgColor?: string;
 }
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
   container_PRIMARY: {
     backgroundColor: '#3237ff',
   },
+  container_SECONDARY: {
+    borderColor: '#3237ff',
+    borderWidth: 2,
+  },
   container_TERTIARY: {},
   text: {
     fontWeight: 'bold',
@@ -55,4 +59,7 @@ const styles = StyleSheet.create({
   text_TERTIARY: {
     color: 'grey',
   },
+  text_SECONDARY: {
+    color: '#3237ff',
+  }
 })

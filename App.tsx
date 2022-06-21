@@ -13,6 +13,11 @@ import { Calculator } from './src/components/Calculator';
 import { Provider } from 'react-redux';
 import { setupStore } from './src/store/store';
 import { SignInScreen } from './src/components/SignInScreen';
+import { SignUpScreen } from './src/components/SignUpScreen';
+import { ConfirmEmailScreen } from './src/components/ConfirmEmailScreen';
+import { ForgotPasswordScreen } from './src/components/ForgotPasswordScreen';
+import { NewPasswordScreen } from './src/components/NewPasswordScreen';
+import { Navigation } from './src/components/Navigation';
 // import { store } from './src/redux';
 
 // function Feed() {
@@ -76,10 +81,15 @@ const store = setupStore();
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        {/* <SideMenu /> */}
-        <SignInScreen />
-      </NavigationContainer>
+      {/* <NavigationContainer> */}
+      {/* <SideMenu /> */}
+      {/* <SignInScreen /> */}
+      {/* <SignUpScreen /> */}
+      {/* <ConfirmEmailScreen /> */}
+      {/* <ForgotPasswordScreen /> */}
+      {/* <NewPasswordScreen /> */}
+      <Navigation />
+      {/* </NavigationContainer> */}
     </Provider>
   );
 }
