@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
-import { StyleSheet, Text, View } from 'react-native';
+import { KeyboardTypeOptions, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 interface Props {
@@ -9,9 +9,17 @@ interface Props {
   placeholder: string;
   secureTextEntry?: boolean;
   rules: { [key: string]: any };
+  keyboardType?: KeyboardTypeOptions | undefined;
 }
 
-export const CustomInput: React.FC<Props> = ({ control, name, rules = {}, placeholder, secureTextEntry }) => {
+export const CustomInput: React.FC<Props> = ({
+  control,
+  name,
+  rules = {},
+  placeholder,
+  secureTextEntry,
+  keyboardType
+}) => {
   return (
     <Controller
       control={control}
@@ -27,6 +35,7 @@ export const CustomInput: React.FC<Props> = ({ control, name, rules = {}, placeh
               onBlur={onBlur}
               placeholder={placeholder}
               secureTextEntry={secureTextEntry}
+              keyboardType={keyboardType}
             />
           </View>
           {error && <Text style={{ color: 'red', alignSelf: 'stretch' }}>{error.message || 'Error'}</Text>}
@@ -49,6 +58,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   input: {
-    paddingVertical: 10
-  }
+    padding: 10,
+    fontSize: 16,
+  },
 })

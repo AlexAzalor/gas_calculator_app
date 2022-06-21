@@ -59,6 +59,7 @@ export const SignUpScreen = () => {
           name="email"
           placeholder="Email"
           control={control}
+          keyboardType="email-address"
           rules={{
             pattern: {
               value: EMAIL_REGEX,
