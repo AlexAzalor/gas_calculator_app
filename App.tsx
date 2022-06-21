@@ -1,22 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { NavigationContainer, DrawerActions } from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
-import { Map } from './src/components/Map';
-import { MapRoutSearchBox } from './src/components/MapRoutSearchBox';
-import { Calculator } from './src/components/Calculator';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { setupStore } from './src/store/store';
-import { SignInScreen } from './src/components/SignInScreen';
-import { SignUpScreen } from './src/components/SignUpScreen';
-import { ConfirmEmailScreen } from './src/components/ConfirmEmailScreen';
-import { ForgotPasswordScreen } from './src/components/ForgotPasswordScreen';
-import { NewPasswordScreen } from './src/components/NewPasswordScreen';
 import { Navigation } from './src/components/Navigation';
 // import { store } from './src/redux';
 
@@ -52,20 +36,20 @@ import { Navigation } from './src/components/Navigation';
 //   );
 // }
 
-const Drawer = createDrawerNavigator();
+// const Drawer = createDrawerNavigator();
 
-const SideMenu = () => {
-  return (
-    <Drawer.Navigator
-      useLegacyImplementation
-    // drawerContent={(props) => <CustomDrawerContent {...props} />}
-    >
-      <Drawer.Screen name="Map" component={Map} />
-      {/* <Drawer.Screen name="Test" component={MapRoutSearchBox} /> */}
-      <Drawer.Screen name="Gas calculator" component={Calculator} />
-    </Drawer.Navigator>
-  );
-}
+// export const SideMenu = () => {
+//   return (
+//     <Drawer.Navigator
+//       useLegacyImplementation
+//     // drawerContent={(props) => <CustomDrawerContent {...props} />}
+//     >
+//       <Drawer.Screen name="Map" component={Map} />
+//       {/* <Drawer.Screen name="Test" component={MapRoutSearchBox} /> */}
+//       <Drawer.Screen name="Gas calculator" component={Calculator} />
+//     </Drawer.Navigator>
+//   );
+// }
 
 // export default function App() {
 //   return (
@@ -81,15 +65,7 @@ const store = setupStore();
 export default function App() {
   return (
     <Provider store={store}>
-      {/* <NavigationContainer> */}
-      {/* <SideMenu /> */}
-      {/* <SignInScreen /> */}
-      {/* <SignUpScreen /> */}
-      {/* <ConfirmEmailScreen /> */}
-      {/* <ForgotPasswordScreen /> */}
-      {/* <NewPasswordScreen /> */}
       <Navigation />
-      {/* </NavigationContainer> */}
     </Provider>
   );
 }
