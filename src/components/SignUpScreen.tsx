@@ -1,9 +1,18 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CustomButton } from './CustomButton';
 import { CustomInput } from './CustomInput';
-import { SocialButtons } from './social/SocialButtons';
+import { SocialButtons } from './SocialButtons';
+
+type RootStackParamList = {
+  ConfirmEmail: undefined;
+  SignIn: undefined;
+};
+
+type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export const SignUpScreen = () => {
   const [username, setUsername] = useState('');
@@ -11,12 +20,18 @@ export const SignUpScreen = () => {
   const [password, setPassword] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
 
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
+
   const onRegisterPressed = () => {
     console.log('Register');
+
+    navigation.navigate('ConfirmEmail');
   }
 
   const onSignInPress = () => {
     console.log('No acc');
+
+    navigation.navigate('SignIn');
   }
 
   const onTermsOfUsePressed = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { CustomButton } from '../CustomButton';
+import { CustomButton } from './CustomButton';
 
 export const SocialButtons = () => {
   const onSignInFacebook = () => {

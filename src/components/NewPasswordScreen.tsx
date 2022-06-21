@@ -1,20 +1,35 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CustomButton } from './CustomButton';
 import { CustomInput } from './CustomInput';
-import { SocialButtons } from './social/SocialButtons';
+import { SocialButtons } from './SocialButtons';
+
+type RootStackParamList = {
+  HomeScreen: undefined;
+  SignIn: undefined;
+};
+
+type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export const NewPasswordScreen = () => {
   const [code, setCode] = useState('');
   const [newPassword, setnewPassword] = useState('');
 
-  const onSignInPress = () => {
-    console.log('No acc');
-  }
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
 
   const onSubmitPressed = () => {
     console.log('Send password');
+
+    navigation.navigate('HomeScreen');
+  }
+
+  const onSignInPress = () => {
+    console.log('No acc');
+
+    navigation.navigate('SignIn');
   }
 
   return (
