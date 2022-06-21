@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CustomButton } from './CustomButton';
 import { CustomInput } from './CustomInput';
-import { SocialButtons } from './SocialButtons';
 
 type RootStackParamList = {
   SignIn: undefined;
@@ -14,22 +14,18 @@ type RootStackParamList = {
 
 type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-
 export const ForgotPasswordScreen = () => {
-  const [username, setUsername] = useState('');
-
   const navigation = useNavigation<ProfileScreenNavigationProp>();
+  const { control, handleSubmit } = useForm();
 
-  const onSignInPress = () => {
-    console.log('No acc');
-
-    navigation.navigate('SignIn');
-  }
-
-  const onSendPress = () => {
-    console.log('Send password');
+  const onSendPress = (data: FieldValues) => {
+    console.log('Send password - ', data);
 
     navigation.navigate('NewPassword');
+  }
+
+  const onSignInPress = () => {
+    navigation.navigate('SignIn');
   }
 
   return (
@@ -38,12 +34,13 @@ export const ForgotPasswordScreen = () => {
         <Text style={styles.title}>Reset your password</Text>
 
         <CustomInput
+          name="username"
           placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          control={control}
+          rules={{ required: 'Username is required' }}
         />
 
-        <CustomButton text="Send" onPress={onSendPress} />
+        <CustomButton text="Send" onPress={handleSubmit(onSendPress)} />
 
         <CustomButton
           text="Back to Sign In"
