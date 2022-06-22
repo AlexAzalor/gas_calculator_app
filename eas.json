@@ -7,6 +7,9 @@
       "developmentClient": true,
       "distribution": "internal"
     },
+    "local-deploy": {
+      "releaseChannel": "local"
+    },
     "preview": {
       "distribution": "internal"
     },
