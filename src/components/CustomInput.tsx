@@ -18,7 +18,7 @@ export const CustomInput: React.FC<Props> = ({
   rules = {},
   placeholder,
   secureTextEntry,
-  keyboardType
+  keyboardType,
 }) => {
   return (
     <Controller

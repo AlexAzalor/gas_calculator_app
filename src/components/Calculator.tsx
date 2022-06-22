@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useAppSelector } from '../hooks/redux';
@@ -106,84 +106,86 @@ export const Calculator = () => {
   }
 
   return (
-    <View>
-      <Text style={styles.text}>Make</Text>
-      <DropDownPicker
-        searchable={true}
-        listMode="MODAL"
-        modalProps={{
-          animationType: "fade"
-        }}
-        open={openMakeList}
-        setOpen={setOpenMakeList}
-        onOpen={onCountryOpen}
-        value={carMake}
-        setValue={setCarMake}
-        items={makeListFromServer}
-        setItems={setMakeListFromServer}
-        style={styles.selector}
-        zIndex={3000}
-        zIndexInverse={1000}
-      />
-      <Text style={styles.text}>Model</Text>
-      <DropDownPicker
-        searchable={true}
-        listMode="MODAL"
-        modalProps={{
-          animationType: "fade"
-        }}
-        open={openModelList}
-        setOpen={setOpenModelList}
-        value={carModel}
-        setValue={setCarModel}
-        items={modelListFromServer}
-        setItems={setModelListFromServer}
-        style={styles.selector}
-        zIndex={2000}
-        zIndexInverse={2000}
-      />
-      <Text style={styles.text}>Year</Text>
-      <DropDownPicker
-        open={openYearList}
-        setOpen={setOpenYearList}
-        value={carYear}
-        setValue={setCarYear}
-        items={yearListFromServer}
-        setItems={setYearListFromServer}
-        style={styles.selector}
-        zIndex={1000}
-        zIndexInverse={3000}
-      />
-      <Text style={styles.text}>Type of Gasoline</Text>
-      <DropDownPicker
-        open={openGasList}
-        setOpen={setOpenGasList}
-        onOpen={onCityOpen}
-        value={gasType}
-        setValue={setGasType}
-        items={gasList}
-        setItems={setGasList}
-        style={styles.selector}
-        zIndex={500}
-        zIndexInverse={3500}
-      />
-      <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={getSubmit}>
-        <Text style={styles.buttonText}>Calculate</Text>
-      </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View>
+        <Text style={styles.text}>Make</Text>
+        <DropDownPicker
+          searchable={true}
+          listMode="MODAL"
+          modalProps={{
+            animationType: "fade"
+          }}
+          open={openMakeList}
+          setOpen={setOpenMakeList}
+          onOpen={onCountryOpen}
+          value={carMake}
+          setValue={setCarMake}
+          items={makeListFromServer}
+          setItems={setMakeListFromServer}
+          style={styles.selector}
+          zIndex={3000}
+          zIndexInverse={1000}
+        />
+        <Text style={styles.text}>Model</Text>
+        <DropDownPicker
+          searchable={true}
+          listMode="MODAL"
+          modalProps={{
+            animationType: "fade"
+          }}
+          open={openModelList}
+          setOpen={setOpenModelList}
+          value={carModel}
+          setValue={setCarModel}
+          items={modelListFromServer}
+          setItems={setModelListFromServer}
+          style={styles.selector}
+          zIndex={2000}
+          zIndexInverse={2000}
+        />
+        <Text style={styles.text}>Year</Text>
+        <DropDownPicker
+          open={openYearList}
+          setOpen={setOpenYearList}
+          value={carYear}
+          setValue={setCarYear}
+          items={yearListFromServer}
+          setItems={setYearListFromServer}
+          style={styles.selector}
+          zIndex={1000}
+          zIndexInverse={3000}
+        />
+        <Text style={styles.text}>Type of Gasoline</Text>
+        <DropDownPicker
+          open={openGasList}
+          setOpen={setOpenGasList}
+          onOpen={onCityOpen}
+          value={gasType}
+          setValue={setGasType}
+          items={gasList}
+          setItems={setGasList}
+          style={styles.selector}
+          zIndex={500}
+          zIndexInverse={3500}
+        />
+        <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={getSubmit}>
+          <Text style={styles.buttonText}>Calculate</Text>
+        </TouchableOpacity>
 
-      {/* <Text>redux distance - {distanceRedux}</Text>
+        {/* <Text>redux distance - {distanceRedux}</Text>
       <Text>redux city - {cityRedux}</Text> */}
 
-      <Text style={styles.resultTitle}>Gas Price for a Trip: </Text>
-      <View style={[styles.resultValue, styles.boxShadow]}>
-        <Text style={styles.resultText}>{gasPrice} $</Text>
-      </View>
+        <Text style={styles.resultTitle}>Gas Price for a Trip: </Text>
+        <View style={[styles.resultValue, styles.boxShadow]}>
+          <Text style={styles.resultText}>{gasPrice} $</Text>
+        </View>
 
-      <Text style={styles.resultTitle}>CO2 Produced: </Text>
-      <View style={[styles.resultValue, styles.boxShadow]}>
-        <Text style={styles.resultText}>{carbonConsumption} kg</Text>
+        <Text style={styles.resultTitle}>CO2 Produced: </Text>
+        <View style={[styles.resultValue, styles.boxShadow]}>
+          <Text style={styles.resultText}>{carbonConsumption} kg</Text>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

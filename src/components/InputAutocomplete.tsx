@@ -15,6 +15,9 @@ export const InputAutocomplete: React.FC<Props> = ({ placeholder, onPlaceSelecte
         styles={{ textInput: styles.input }}
         placeholder={placeholder || ''}
         fetchDetails
+        // textInputProps={{
+        //   onChangeText: (text) => { console.log('textInputProps - ', text) }
+        // }}
         onPress={(data, details = null) => {
           onPlaceSelected(details);
           inputValue(data.description)

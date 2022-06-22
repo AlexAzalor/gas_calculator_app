@@ -5,9 +5,11 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { Image, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Logo from '../../assets/square100.png';
+import { instanceLogin } from '../api/auth/login';
 import { CustomButton } from './CustomButton';
 import { CustomInput } from './CustomInput';
 import { SocialButtons } from './SocialButtons';
+import expo from '../../app.json'
 
 type RootStackParamList = {
   HomeScreen: undefined;
@@ -21,6 +23,14 @@ export const SignInScreen = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation<ProfileScreenNavigationProp>();
   const { control, handleSubmit } = useForm();
+
+  const getRegisteredUser = async (data: FieldValues) => {
+    const response = await instanceLogin(data.username, data.password).get('/api/login');
+
+    if (response) {
+      navigation.navigate('HomeScreen');
+    }
+  }
 
   const onSignInPressed = (data: FieldValues) => {
     console.log('Sign in input data - ', data);
@@ -45,9 +55,12 @@ export const SignInScreen = () => {
           resizeMode="contain"
         />
 
+        <Text>App version: {expo.expo.version}</Text>
+        <Text>Android app version: {expo.expo.android.versionCode}</Text>
+
         <CustomInput
           name="username"
-          placeholder="Username"
+          placeholder="Username1"
           control={control}
           rules={{ required: 'Username is required' }}
         />
