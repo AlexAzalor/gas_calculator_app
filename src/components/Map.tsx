@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import MapView, { LatLng, Marker } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Linking, Alert } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Linking, Alert, Image } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { MapRoutSearchBox } from './MapRoutSearchBox';
@@ -98,7 +98,10 @@ export const Map = () => {
         initialRegion={INITIAL_POSITION}
         toolbarEnabled={true}
       >
-        {startPoint && <Marker coordinate={startPoint} image={require('../../assets/icon-marker.png')}></Marker>}
+        {startPoint && <Marker coordinate={startPoint} >
+          <Image source={require('../../assets/icon-marker.png')} style={{ height: 32, width: 32 }} />
+
+        </Marker>}
         {endPoint && <Marker coordinate={endPoint}></Marker>}
         {showDirections && startPoint && endPoint && (
           <MapViewDirections
