@@ -8,7 +8,10 @@
       "distribution": "internal"
     },
     "local-deploy": {
-      "releaseChannel": "local"
+      "releaseChannel": "local",
+      "android": {
+        "buildType": "apk"
+      }
     },
     "preview": {
       "distribution": "internal"
