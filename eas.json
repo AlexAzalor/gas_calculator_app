@@ -7,12 +7,22 @@
       "developmentClient": true,
       "distribution": "internal"
     },
+    "local-deploy": {
+      "releaseChannel": "local",
+      "android": {
+        "buildType": "apk"
+      }
+    },
     "preview": {
       "distribution": "internal"
     },
     "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "../pc-api-6088298818977743493-275-a561197c24fa.json"
+      }
+    }
   }
 }
