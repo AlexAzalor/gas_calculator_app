@@ -4,24 +4,24 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CustomButton } from './CustomButton';
-import { CustomInput } from './CustomInput';
+import { CustomButton } from '../CustomButton';
+import { CustomInput } from '../CustomInput';
 
 type RootStackParamList = {
-  HomeScreen: undefined;
   SignIn: undefined;
+  NewPassword: undefined;
 };
 
 type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-export const NewPasswordScreen = () => {
+export const ForgotPasswordScreen = () => {
   const navigation = useNavigation<ProfileScreenNavigationProp>();
   const { control, handleSubmit } = useForm();
 
-  const onSubmitPressed = (data: FieldValues) => {
-    console.log('Send new password - ', data);
+  const onSendPress = (data: FieldValues) => {
+    console.log('Send password - ', data);
 
-    navigation.navigate('HomeScreen');
+    navigation.navigate('NewPassword');
   }
 
   const onSignInPress = () => {
@@ -34,27 +34,13 @@ export const NewPasswordScreen = () => {
         <Text style={styles.title}>Reset your password</Text>
 
         <CustomInput
-          name="code"
-          placeholder="Code"
+          name="username"
+          placeholder="Username"
           control={control}
-          rules={{ required: 'Code is required' }}
+          rules={{ required: 'Username is required' }}
         />
 
-        <CustomInput
-          name="newpassword"
-          placeholder="Enter your new password"
-          control={control}
-          secureTextEntry
-          rules={{
-            required: 'Password is required',
-            minLength: {
-              value: 8,
-              message: 'Password should be at least 8 characters long'
-            }
-          }}
-        />
-
-        <CustomButton text="Submit" onPress={handleSubmit(onSubmitPressed)} />
+        <CustomButton text="Send" onPress={handleSubmit(onSendPress)} />
 
         <CustomButton
           text="Back to Sign In"

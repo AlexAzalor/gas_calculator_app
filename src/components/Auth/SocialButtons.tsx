@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { CustomButton } from './CustomButton';
+import { CustomButton } from '../CustomButton';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export const SocialButtons = () => {

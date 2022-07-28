@@ -4,8 +4,8 @@ import { StyleSheet, Text, View, Dimensions, Linking, Alert, Image } from 'react
 import MapViewDirections from 'react-native-maps-directions';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { MapRoutSearchBox } from './MapRoutSearchBox';
-import { dataSlice } from '../store/reducers/DataSlice';
-import { useAppDispatch } from '../hooks/redux';
+import { dataSlice } from '../../store/reducers/DataSlice';
+import { useAppDispatch } from '../../hooks/redux';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -99,7 +99,7 @@ export const Map = () => {
         toolbarEnabled={true}
       >
         {startPoint && <Marker coordinate={startPoint} >
-          <Image source={require('../../assets/icon-marker.png')} style={{ height: 32, width: 32 }} />
+          <Image source={require('../../../assets/icon-marker.png')} style={{ height: 32, width: 32 }} />
 
         </Marker>}
         {endPoint && <Marker coordinate={endPoint}></Marker>}

@@ -1,6 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Calculator } from "./Calculator";
-import { Map } from "./Map";
+import { Map } from "./Map/Map";
 
 const Drawer = createDrawerNavigator();
 

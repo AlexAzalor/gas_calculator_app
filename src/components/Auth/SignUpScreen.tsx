@@ -4,8 +4,8 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CustomButton } from './CustomButton';
-import { CustomInput } from './CustomInput';
+import { CustomButton } from '../CustomButton';
+import { CustomInput } from '../CustomInput';
 import { SocialButtons } from './SocialButtons';
 
 type RootStackParamList = {

@@ -4,8 +4,8 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { CustomButton } from './CustomButton';
-import { CustomInput } from './CustomInput';
+import { CustomButton } from '../CustomButton';
+import { CustomInput } from '../CustomInput';
 
 type RootStackParamList = {
   HomeScreen: undefined;
@@ -14,12 +14,12 @@ type RootStackParamList = {
 
 type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-export const ConfirmEmailScreen = () => {
+export const NewPasswordScreen = () => {
   const navigation = useNavigation<ProfileScreenNavigationProp>();
   const { control, handleSubmit } = useForm();
 
-  const onConfirmPressed = (data: FieldValues) => {
-    console.log('Confirm email - ', data);
+  const onSubmitPressed = (data: FieldValues) => {
+    console.log('Send new password - ', data);
 
     navigation.navigate('HomeScreen');
   }
@@ -28,29 +28,33 @@ export const ConfirmEmailScreen = () => {
     navigation.navigate('SignIn');
   }
 
-  const onResendPress = () => {
-    console.log('Resend code');
-  }
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        <Text style={styles.title}>Confirm your email</Text>
+        <Text style={styles.title}>Reset your password</Text>
 
         <CustomInput
           name="code"
-          placeholder="Enter your confirmation code"
+          placeholder="Code"
           control={control}
-          rules={{ required: 'Confirmaion code is required' }}
+          rules={{ required: 'Code is required' }}
         />
 
-        <CustomButton text="Confirm" onPress={handleSubmit(onConfirmPressed)} />
-
-        <CustomButton
-          text="Resend code"
-          onPress={onResendPress}
-          type="SECONDARY"
+        <CustomInput
+          name="newpassword"
+          placeholder="Enter your new password"
+          control={control}
+          secureTextEntry
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 8,
+              message: 'Password should be at least 8 characters long'
+            }
+          }}
         />
+
+        <CustomButton text="Submit" onPress={handleSubmit(onSubmitPressed)} />
 
         <CustomButton
           text="Back to Sign In"

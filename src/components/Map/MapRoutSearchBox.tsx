@@ -5,8 +5,8 @@ import { InputAutocomplete } from './InputAutocomplete';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import { dataSlice } from '../store/reducers/DataSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { dataSlice } from '../../store/reducers/DataSlice';
 
 interface Props {
   distance: number;
@@ -23,7 +23,7 @@ export const MapRoutSearchBox: React.FC<Props> = ({ distance, duration, traceRou
   const dispatch = useAppDispatch()
 
   const getCity = (place: string) => {
-    const statusMap = new Map([
+    const checkCity = new Map([
       [place.includes('Toronto'), 'Toronto'],
       [place.includes('Barrie'), 'Barrie'],
       [place.includes('Guelph'), 'Guelph'],
@@ -36,10 +36,8 @@ export const MapRoutSearchBox: React.FC<Props> = ({ distance, duration, traceRou
       [place.includes('UK'), 'UK'],
     ]);
 
-    function getStatusByMap() {
-      return statusMap.get(true) || 'Average';
-    }
-    dispatch(getCityProp(getStatusByMap()))
+    const city = checkCity.get(true) || 'Average';
+    dispatch(getCityProp(city))
   }
 
   return (

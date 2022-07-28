@@ -145,6 +145,7 @@ export const Calculator = () => {
         />
         <Text style={styles.text}>Year</Text>
         <DropDownPicker
+          listMode="SCROLLVIEW"
           open={openYearList}
           setOpen={setOpenYearList}
           value={carYear}
@@ -157,6 +158,7 @@ export const Calculator = () => {
         />
         <Text style={styles.text}>Type of Gasoline</Text>
         <DropDownPicker
+          listMode="SCROLLVIEW"
           open={openGasList}
           setOpen={setOpenGasList}
           onOpen={onCityOpen}
